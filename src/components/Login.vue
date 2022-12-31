@@ -17,7 +17,22 @@ export default {
     submitCredentials(username, password) {
       console.log(username);
       console.log(password);
-    }
+      let dto = JSON.stringify({
+        "username": username,
+        "password": password
+      });
+      fetch("http://localhost:5044/api/login", {
+        method: 'post',
+        headers: {
+          'Content-Type' : 'application/json'
+        },
+        body: dto
+      }).then(response => {
+        console.log(response.json());
+        this.$store.commit('login', username, response);
+        console.log(this.$store.state.response);
+      });
+    } 
   }
 }
 
