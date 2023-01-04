@@ -146,15 +146,14 @@ export default {
   methods: {
     save(id) {
       console.log(id);
-      fetch("https://localhost:7146/api/users/current/stops/" + id, {
+      fetch("https://localhost:7146/api/users/current/stops", {
         method: 'post',
         headers: {
-          'Authorization': this.$store.state.token
-        }
+          'Authorization': 'Bearer ' + this.$store.state.token,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ stopId: id })
       });
-    },
-    test() {
-      console.log("dupa");
     },
     async getAllStops() {
       const dto = await fetch("https://localhost:7146/api/stops", {
@@ -170,7 +169,7 @@ export default {
     },
   },
   beforeMount() {
-    //this.getAllStops();
+    this.getAllStops();
   }
 }
 

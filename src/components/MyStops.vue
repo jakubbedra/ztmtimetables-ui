@@ -4,8 +4,13 @@
     <vue-good-table :columns="columns" :rows="rows">
       <template #table-row="props">
         <span v-if="props.column.field === 'details'">
-          <button type="button" class="btn" style="color: white" v-on:click="edit(props.row.stopId)">
+          <button type="button" class="btn" style="color: white" v-on:click="goToDetails(props.row.stopId)">
             View details
+          </button>
+        </span>
+        <span v-if="props.column.field === 'remove'">
+          <button type="button" class="btn" style="color: white; background-color: red" v-on:click="remove(props.row.stopId)">
+            Remove
           </button>
         </span>
         <span v-else>
@@ -46,6 +51,10 @@ export default {
         {
           label: '',
           field: 'details',
+        },
+        {
+          label: '',
+          field: 'remove',
         },
       ],
       rows: [
@@ -144,14 +153,24 @@ export default {
     }
   },
   methods: {
-    test() {
-      console.log("dupa");
+    goToDetails(stopId) {
+      console.log(stopId);
+      this.$router.replace({ path: '/stop/'+stopId });
+    },
+    remove(stopId) {
+      console.log(stopId);
+      fetch("https://localhost:7146/api/users/current/stops/"+stopId, {
+        method: 'delete',
+        headers: {
+          'Authorization': 'Bearer ' + this.$store.state.token
+        }
+      });
     },
     async getAllStops() {
       var dto = await fetch("https://localhost:7146/api/users/current/stops", {
         method: 'get',
         headers: {
-          'Authorization': this.$store.state.token
+          'Authorization': 'Bearer ' + this.$store.state.token
         }
       }).then(response => {
         return response.json();
@@ -164,7 +183,7 @@ export default {
     },
   },
   beforeMount() {
-    //this.getAllStops();
+    this.getAllStops();
   }
 }
 

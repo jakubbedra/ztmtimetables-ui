@@ -6,6 +6,7 @@ const routes = [
     {path: '/login', name: 'login', component: () => import('../components/Login.vue')},
     {path: '/bus-stops', name: 'bus-stops', component: () => import('../components/BusStops.vue')},
     {path: '/my-stops', name: 'my-stops', component: () => import('../components/MyStops.vue')},
+    {path: '/stop/:id', name: 'stop-details', component: () => import('../components/StopDetails.vue')},
 ];
 
 const router = createRouter({
