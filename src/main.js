@@ -3,7 +3,11 @@ import {createStore} from 'vuex'
 import './style.css'
 import router from "./plugins/router.js";
 import App from './App.vue'
-import {VueGoodTable} from "vue-good-table";
+
+import VueGoodTablePlugin from 'vue-good-table-next';
+
+// import the styles 
+import 'vue-good-table-next/dist/vue-good-table-next.css'
 
 const store = createStore({
     state () {
@@ -13,8 +17,10 @@ const store = createStore({
         }
     },
     mutations: {
-        login (state, username, token) {
+        saveUsername (state, username) {
             state.username = username;
+        },
+        saveToken (state, token) {
             state.token = token;
         },
         logout (state) {
@@ -27,5 +33,6 @@ const store = createStore({
 createApp(App)
     .use(router)
     .use(store)
-    .use(VueGoodTable)
+    .use(VueGoodTablePlugin)
     .mount('#app')
+    

@@ -1,11 +1,11 @@
 <template>
-  <h2>Stops</h2>
+  <h2>My Stops</h2>
   <div>
     <vue-good-table :columns="columns" :rows="rows">
       <template #table-row="props">
-        <span v-if="props.column.field === 'add' && this.$store.state.token !== ''">
-          <button type="button" class="btn" style="color: white" v-on:click="save(props.row.stopId)">
-            Save Stop
+        <span v-if="props.column.field === 'details'">
+          <button type="button" class="btn" style="color: white" v-on:click="edit(props.row.stopId)">
+            View details
           </button>
         </span>
         <span v-else>
@@ -45,7 +45,7 @@ export default {
         },
         {
           label: '',
-          field: 'add',
+          field: 'details',
         },
       ],
       rows: [
@@ -144,29 +144,23 @@ export default {
     }
   },
   methods: {
-    save(id) {
-      console.log(id);
-      fetch("https://localhost:7146/api/users/current/stops/" + id, {
-        method: 'post',
-        headers: {
-          'Authorization': this.$store.state.token
-        }
-      });
-    },
     test() {
       console.log("dupa");
     },
     async getAllStops() {
-      const dto = await fetch("https://localhost:7146/api/stops", {
+      var dto = await fetch("https://localhost:7146/api/users/current/stops", {
         method: 'get',
+        headers: {
+          'Authorization': this.$store.state.token
+        }
       }).then(response => {
         return response.json();
       }).then(data => {
         return data;
       });
+      console.log(dto);
+      console.log("dupa");
       this.rows = dto.stops;
-      console.log(this.rows);
-      console.log(this.rows[0]);
     },
   },
   beforeMount() {

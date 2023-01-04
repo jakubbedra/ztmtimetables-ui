@@ -14,7 +14,7 @@ export default {
     }
   },
   methods: {
-    submitCredentials(username, password) {
+    submitCredentials(username, password ) {
       console.log(username);
       console.log(password);
       let dto = JSON.stringify({
@@ -28,9 +28,14 @@ export default {
         },
         body: dto
       }).then(response => {
-        console.log(response.json());
-        this.$store.commit('login', username, response);
-        console.log(this.$store.state.response);
+        return response.json();
+      }).then( data => {
+        console.log(data);
+        this.$store.commit('saveUsername', username);
+        this.$store.commit('saveToken', data);
+        console.log(this.$store.state.username);
+        console.log(this.$store.state.token);
+        this.$router.replace({ path: '/' });
       });
     } 
   }

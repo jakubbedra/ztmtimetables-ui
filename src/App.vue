@@ -13,8 +13,8 @@ import Logout from "./components/Logout.vue";
 </script>
 
 <style>
-  .header-div {
-    float: top;
-    display: inline-block;
-  }
+.header-div {
+  float: top;
+  display: inline-block;
+}
 </style>
